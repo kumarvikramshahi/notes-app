@@ -13,6 +13,5 @@ type Notes struct {
 }
 
 type IncomingNotes struct {
-	Sid  string `form:"sid" json:"sid,omitempty"`
 	Note string `form:"note" json:"note,omitempty" gorm:"size:400" binding:"required"`
 }

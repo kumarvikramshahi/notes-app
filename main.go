@@ -1,13 +1,20 @@
 package main
 
 import (
+	"log"
 	"notesApp/configs"
 	"notesApp/routes"
 
 	gin "github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func init() {
+	// load env variables
+	err:=godotenv.Load()
+	if err!=nil {
+		log.Fatal("not able to load env variables")
+	}
 	configs.ConnectDB()
 }
 

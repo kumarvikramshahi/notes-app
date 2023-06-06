@@ -8,7 +8,7 @@ import (
 )
 
 func Notes(router *gin.Engine) {
-	router.GET("/notes/:sessionId", middleware.ValidateJwtToken, controllers.FetchNotes)
+	router.GET("/notes", middleware.ValidateJwtToken, controllers.FetchNotes)
 	router.POST("/notes", middleware.ValidateJwtToken, controllers.CreateNotes)
-	router.DELETE("/notes/:nid/:sid", middleware.ValidateJwtToken, controllers.DeleteNotes)
+	router.DELETE("/notes/:nid", middleware.ValidateJwtToken, controllers.DeleteNotes)
 }

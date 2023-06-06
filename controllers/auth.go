@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 	"net/mail"
 	"notesApp/configs"
@@ -48,17 +49,19 @@ func LogIn(ctx *gin.Context) {
 	}
 	// if email found but password incorrect
 	if user.Password != requestData.Password {
-		ctx.JSON(http.StatusNotFound, gin.H{
+		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"error": "either email or password wrong",
 		})
 		return
 	}
 	// if user found & password correct => return session_id
-	jwtToken, err := middleware.CreateJwtToken(user.Email)
+	jwtToken, err := middleware.CreateJwtToken(user.Email, user.Password)
 	if err != nil {
+		log.Fatal("err in token creation: ",err)
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": "can't create token",
 		})
+		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"sid": jwtToken,
